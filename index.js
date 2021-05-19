@@ -61,7 +61,7 @@ app.use(function (req, res, next) {
 
 app.listen(process.env.APP_PORT || 3000, () => {
   if (process.env.NODE_ENV !== 'develop') {
-    logger.info('App starting on port: ' + (process.env.APP_PORT || 3000));
+    // logger.info('App starting on port: ' + (process.env.APP_PORT || 3000));
   }
   console.log('App starting on port: ' + (process.env.APP_PORT || 3000));
 });
