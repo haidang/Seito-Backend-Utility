@@ -30,9 +30,11 @@ i18n.configure({
   cookie: 'lang',
   queryParameter: 'lang',
   syncFiles: true,
-  // logDebugFn: function (msg) {
-  //   console.log('debug', msg);
-  // },
+  logDebugFn: function (msg) {
+    if (process.env.NODE_ENV === 'debug_lang') {
+      console.log('debug', msg);
+    }
+  },
   logWarnFn: function (msg) {
     console.log('warn', msg);
   },
@@ -43,7 +45,6 @@ i18n.configure({
 app.use(i18n.init);
 
 app.use(function (req, res, next) {
-  // i18n.init(req, res);
   res.status(404);
   // respond with html page
   if (req.accepts('html')) {
@@ -59,12 +60,17 @@ app.use(function (req, res, next) {
   res.type('txt').send(__('Not found'));
 });
 
-let port = process.env.PORT
-  ? process.env.PORT || 3000
-  : process.env.APP_PORT || 3000;
+let port =
+  process.env.SERVER_TYPE === 'heroku'
+    ? process.env.PORT || 3000
+    : process.env.APP_PORT || 3000;
 app.listen(port, () => {
-  if (process.env.NODE_ENV !== 'develop') {
-    // logger.info('App starting on port: ' + (process.env.APP_PORT || 3000));
+  if (
+    process.env.NODE_ENV === 'develop' ||
+    process.env.SERVER_TYPE === 'heroku'
+  ) {
+    console.log('App starting on port: ' + port);
+  } else {
+    logger.info('App starting on port: ' + port);
   }
-  console.log('App starting on port: ' + port);
 });
