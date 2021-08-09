@@ -1,0 +1,56 @@
+extends layout
+
+block body
+  body.hold-transition.login-page
+    .login-box
+      // /.login-logo
+      .card.card-outline.card-primary
+        .card-header.text-center
+          a.h2(href='/')
+            b=appFirstName + " "
+            =appLastName
+        .card-body
+          p.login-box-msg #{__("Sign in to start your session")}
+          form(action='/login', method='post')
+            .input-group.mb-3
+              input.form-control(type='email', placeholder='Email')
+              .input-group-append
+                .input-group-text
+                  span.fas.fa-envelope
+            .input-group.mb-3
+              input.form-control(type='password', placeholder=__('Password'))
+              .input-group-append
+                .input-group-text
+                  span.fas.fa-lock
+            .row
+              .col-8
+                .icheck-primary
+                  input#remember(type='checkbox')
+                  label(for='remember')
+                    | #{__("Remember Me")}
+              // /.col
+              .col-4
+                button.btn.btn-primary.btn-block(type='submit') #{__("Log In")}
+              // /.col
+          .social-auth-links.text-center.mt-2.mb-3
+            a.btn.btn-block.btn-primary(href='#')
+              i.fab.fa-facebook.mr-2
+              |  #{__("Sign in using Facebook")}
+            a.btn.btn-block.btn-danger(href='#')
+              i.fab.fa-google-plus.mr-2
+              |  #{__("Sign in using Google+")}
+          // /.social-auth-links
+          p.mb-1
+            a(href='/account/forgot-password') #{__("I forgot my password")}
+          p.mb-0
+            a.text-center(href='/account/register') #{__("Register a new membership")}
+        // /.card-body
+      // /.card
+    // /.login-box
+    // jQuery
+
+    script(src=template + '/plugins/jquery/jquery.min.js')
+    // Bootstrap 4
+    script(src=template + '/plugins/bootstrap/js/bootstrap.bundle.min.js')
+    // AdminLTE App
+    script(src=template + '/dist/js/adminlte.min.js')
