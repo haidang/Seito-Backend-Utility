@@ -2,28 +2,33 @@ const config = require("../../bin/config");
 const mongoose = require("mongoose");
 const logger = require("../../lib/winston");
 
+const checkDBServer = config.env.NODE_ENV === "dev" ? "dev" : "prod";
 const mongoDBUri =
-  config.database.NODE_ENV === "prod"
+  config.env.NODE_ENV === "prod"
     ? "mongodb+srv://" +
-      (config.database.DB_USER || "user") +
+      config.database[checkDBServer].DB_USER +
       ":" +
-      (config.database.DB_PASSWORD || "password") +
+      config.database[checkDBServer].DB_PASSWORD +
       "@" +
-      (config.database.DB_SERVER || "local") +
+      config.database[checkDBServer].DB_SERVER +
       "/" +
-      // (config.database.DB_NAME || "test") +
+      config.database[checkDBServer].DB_SERVER +
+      "/" +
+      config.database[checkDBServer].DB_NAME +
       "?retryWrites=true&w=majority"
     : "mongodb://" +
-      (config.database.DB_USER || "user") +
+      config.database[checkDBServer].DB_USER +
       ":" +
-      (config.database.DB_PASSWORD || "password") +
-      "@localhost:" +
-      (config.database.DB_LOCAL_PORT || "27017") +
-      "/";
-// (config.database.DB_NAME || "test") +
-// "?authSource=admin";
+      config.database[checkDBServer].DB_PASSWORD +
+      "@" +
+      config.database[checkDBServer].DB_SERVER +
+      ":" +
+      config.database[checkDBServer].DB_PORT +
+      "/" +
+      config.database[checkDBServer].DB_NAME +
+      "?authSource=admin&directConnection=true&ssl=false&appname=" +
+      config.env.APP_NAME;
 const opts = {
-  dbName: config.database.DB_NAME,
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -31,6 +36,7 @@ const opts = {
   serverSelectionTimeoutMS: 5 * 1000, // Keep trying to send operations for 5 seconds
   socketTimeoutMS: 60 * 1000, // Close sockets after 1 minute of inactivity
 };
+// console.log(checkDBServer, mongoDBUri, opts);
 mongoose
   .connect(mongoDBUri, opts)
   .then(() => {

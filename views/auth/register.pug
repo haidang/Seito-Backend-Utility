@@ -42,11 +42,13 @@ block body
               .col-4
                 button.btn.btn-primary.btn-block(type='submit') #{__("Register")}
               // /.col
-          .social-auth-links.text-center
+          .social-auth-links.text-center.mt-2.mb-3
             a.btn.btn-block.btn-primary(href='#')
-              i.fab.fa-facebook.mr-2 #{__("Sign up using Facebook")}
+              i.fab.fa-facebook.mr-2
+              |  #{__("Sign in using Facebook")}
             a.btn.btn-block.btn-danger(href='#')
-              i.fab.fa-google-plus.mr-2 #{__("Sign up using Google+")}
+              i.fab.fa-google-plus.mr-2
+              |  #{__("Sign in using Google+")}
           a.text-center(href='/login') #{__("I already have a membership")}
         // /.form-box
       // /.card

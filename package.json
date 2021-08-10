@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mongod-mac": "/Users/dangthach/Data/Projects/mongodb/bin/mongod --config ./bin/mongod.conf"
   },
   "repository": {
     "type": "git",
